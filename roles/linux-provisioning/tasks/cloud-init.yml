@@ -1,0 +1,24 @@
+- name: Render cloud-init user-data
+  ansible.builtin.template:
+    src: user-data.j2
+    dest: /tmp/{{ vm_name }}-user-data
+
+- name: Render cloud-init meta-data
+  ansible.builtin.template:
+    src: meta-data.j2
+    dest: /tmp/{{ vm_name }}-meta-data
+
+- name: Ensure genisoimage is installed
+  ansible.builtin.package:
+    name: genisoimage
+    state: present
+
+- name: Create cloud-init seed ISO
+  ansible.builtin.command: >
+    genisoimage -output {{ seed_iso }}
+    -volid cidata
+    -joliet -rock
+    /tmp/{{ vm_name }}-user-data
+    /tmp/{{ vm_name }}-meta-data
+  args:
+    creates: "{{ seed_iso }}"

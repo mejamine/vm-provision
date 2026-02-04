@@ -1,0 +1,9 @@
+- name: List existing VMs
+  community.libvirt.virt:
+    command: list_vms
+  register: existing_vms
+  changed_when: false
+
+- name: Set VM existence flag
+  set_fact:
+    vm_exists: "{{ vm_name in existing_vms.list_vms }}"
