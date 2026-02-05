@@ -3,15 +3,14 @@ hostname: {{ vm_name }}
 manage_etc_hosts: true
 
 users:
-  - name: admin
+  - name: ansible
     sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: sudo
     shell: /bin/bash
-    passwd: "{{ 'admin' | password_hash('sha512') }}"
-    lock_passwd: false 
     
 chpasswd:
   list: |
-    ansible:MyPassword123
+    ansible:ansible
   expire: False
 
 ssh_pwauth: True
