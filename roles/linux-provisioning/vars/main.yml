@@ -8,7 +8,7 @@ vm_os_variant: ubuntu22.04
 # Libvirt
 libvirt_pool: amin-pool
 libvirt_pool_dir: /mnt/storage/amin
-libvirt_network: amine-net
+libvirt_network: amin-net
 
 # Cloud image
 base_image_url: https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
