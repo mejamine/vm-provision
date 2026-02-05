@@ -7,7 +7,7 @@
       --vcpus {{ vm_vcpus }}
       --disk path={{ vm_image }},format=qcow2,bus=virtio
       --disk path={{ seed_iso }},device=cdrom
-      --os-variant {{ vm_os_variant }}
+      --os-variant generic
       --network network={{ libvirt_network }},model=virtio
       --graphics none
       --console pty,target_type=serial
