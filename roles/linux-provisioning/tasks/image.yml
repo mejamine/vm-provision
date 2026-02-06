@@ -10,6 +10,6 @@
     qemu-img create -f qcow2
     -F qcow2
     -b {{ libvirt_pool_dir }}/{{ base_image_name }}
-    {{ vm_image }} {{ vm_disk_size }}
+    {{ libvirt_pool_dir }}/{{ vm_image }} {{ vm_disk_size }}
   args:
-    creates: "{{ vm_image }}"
+    creates: "{{ libvirt_pool_dir }}/{{ vm_image }}"
