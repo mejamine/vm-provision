@@ -1,20 +1,22 @@
 #cloud-config
-hostname: {{ vm_name }}
-manage_etc_hosts: true
+hostname: "{{ vm_name }}.smartek.ae"
+#manage_etc_hosts: true
 
 users:
-  - name: ansible
+  - name: 'ansible'
+
     sudo: ALL=(ALL) NOPASSWD:ALL
     groups: sudo
     shell: /bin/bash
-    
+
 chpasswd:
   list: |
-    ansible:ansible
+   'ansible':'ansible'
   expire: False
 
 package_update: true
 packages:
   - vim
   - curl
-
+runcmd:
+  - [ sh, -c, "echo 'Provisioned by Ansible + cloud-init' > /etc/motd" ]
