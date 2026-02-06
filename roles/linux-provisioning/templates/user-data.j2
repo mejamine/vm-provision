@@ -13,11 +13,8 @@ chpasswd:
     ansible:ansible
   expire: False
 
-ssh_pwauth: True
-
 package_update: true
 packages:
-  - qemu-guest-agent
+  - vim
+  - curl
 
-runcmd:
-  - systemctl enable --now qemu-guest-agent
