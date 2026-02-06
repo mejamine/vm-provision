@@ -1,12 +1,20 @@
+- name: Make directory for cloud-init files
+  ansible.builtin.file:
+    path: "tmp/{{ vm_name }}"
+    state: directory
+    mode: '0755'
+    
 - name: Render cloud-init user-data
   ansible.builtin.template:
     src: user-data.j2
-    dest: /tmp/{{ vm_name }}-user-data
+    dest: "/tmp/{{ vm_name }}/user-data"
+    mode: '0644'
 
 - name: Render cloud-init meta-data
   ansible.builtin.template:
     src: meta-data.j2
-    dest: /tmp/{{ vm_name }}-meta-data
+    dest: "/tmp/{{ vm_name }}/meta-data"
+    mode: '0644'
 
 - name: Ensure genisoimage is installed
   ansible.builtin.package:
@@ -15,10 +23,10 @@
 
 - name: Create cloud-init seed ISO
   ansible.builtin.command: >
-    genisoimage -output {{ seed_iso }}
+    genisoimage -output {{libvirt_pool_dir}}/seed.iso
     -volid cidata
     -joliet -rock
-    /tmp/{{ vm_name }}-user-data
-    /tmp/{{ vm_name }}-meta-data
+    /tmp/{{ vm_name }}/user-data
+    /tmp/{{ vm_name }}/meta-data
   args:
-    creates: "{{ seed_iso }}"
+    creates: "{{libvirt_pool_dir}}/seed.iso"
