@@ -20,3 +20,5 @@ vm_clock: "utc"
 # Graphics (set to 'none' for headless)
 vm_graphics_type: "spice"
 vm_graphics_listen: "127.0.0.1"
+vm_cpu_mode: "host-model"
+vm_features: ["acpi", "apic"]
