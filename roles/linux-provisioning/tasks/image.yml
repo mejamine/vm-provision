@@ -1,7 +1,13 @@
+- name: Make VM directory
+  file:
+    path: "{{ libvirt_pool_dir }}/{{ vm_name }}"
+    state: directory
+    mode: '0755'
+
 - name: Download base cloud image
   ansible.builtin.get_url:
     url: "{{ base_image_url }}"
-    dest: "{{ libvirt_pool_dir }}/{{ base_image_name }}"
+    dest: "{{ libvirt_pool_dir }}/{{ vm_name }}.qcow2"
     mode: '0644'
     force: no
 
@@ -9,7 +15,7 @@
   ansible.builtin.command: >
     qemu-img create -f qcow2
     -F qcow2
-    -b {{ libvirt_pool_dir }}/{{ base_image_name }}
-    {{ libvirt_pool_dir }}/{{ vm_image }} {{ vm_disk_size }}
+    -b {{ libvirt_pool_dir }}/{{ vm_name }}.qcow2
+    {{ libvirt_pool_dir }}/{{ vm_name }}/{{ vm_name }}.qcow2 {{ vm_disk_size }}
   args:
-    creates: "{{ libvirt_pool_dir }}/{{ vm_image }}"
+    creates: "{{ libvirt_pool_dir }}/{{ vm_name }}/{{ vm_name }}.qcow2"

@@ -1,16 +1,19 @@
-- name: Create and start VM via virt-install on remote KVM
-  ansible.builtin.command: >
-    virt-install
-      --connect qemu:///system
-      --name {{ vm_name }}
-      --memory {{ vm_memory }}
-      --vcpus {{ vm_vcpus }}
-      --disk path={{ libvirt_pool_dir }}/{{ vm_image }},format=qcow2,bus=virtio
-      --disk path={{libvirt_pool_dir}}/seed.iso,device=cdrom,readonly=on,bus=ide
-      --os-variant generic
-      --network network={{ libvirt_network }},model=virtio
-      --graphics none
-      --console pty,target_type=serial
-      --import
-      --noautoconsole
-  delegate_to: kvm01
+- name: Generate libvirt XML configuration
+  ansible.builtin.template:
+    src: vm_template.xml.j2
+    dest: "/tmp/{{ vm_name }}.xml"
+
+
+- name: Define VM
+  ansible.builtin.command: virsh -c qemu:///system define /tmp/{{ vm_name }}.xml
+  become: true
+- name: Start VM
+  ansible.builtin.command: virsh -c qemu:///system  start {{ vm_name }}
+
+
+- name: Get VM info
+  community.libvirt.virt:
+    name: "{{ vm_name }}"
+    command: status
+  register: vm_info
+
