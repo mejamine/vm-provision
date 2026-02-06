@@ -1,6 +1,6 @@
 - name: Make directory for cloud-init files
   ansible.builtin.file:
-    path: "tmp/{{ vm_name }}"
+    path: "/tmp/{{ vm_name }}"
     state: directory
     mode: '0755'
     
