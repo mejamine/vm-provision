@@ -11,6 +11,6 @@ libvirt_pool_dir: /mnt/storage/amin
 libvirt_network: amin-net
 
 # Cloud image
-base_image_url: https://dl.rockylinux.org/pub/rocky/9/images/x86_64/Rocky-9-GenericCloud.latest.x86_64.qcow2
-base_image_name: rocky9-base.qcow2
+base_image_url: https://mirror.atl.adaptivedatanetworks.com/fedora/linux/releases/38/Cloud/x86_64/images/Fedora-Cloud-Base-38-1.6.x86_64.qcow2
+base_image_name: fedora-base.qcow2
 
