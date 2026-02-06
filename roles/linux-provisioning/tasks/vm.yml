@@ -5,7 +5,7 @@
       --name {{ vm_name }}
       --memory {{ vm_memory }}
       --vcpus {{ vm_vcpus }}
-      --disk path={{ vm_image }},format=qcow2,bus=virtio
+      --disk path={{ libvirt_pool_dir }}/{{ vm_image }},format=qcow2,bus=virtio
       --disk path={{libvirt_pool_dir}}/seed.iso,device=cdrom,readonly=on,bus=ide
       --os-variant generic
       --network network={{ libvirt_network }},model=virtio
