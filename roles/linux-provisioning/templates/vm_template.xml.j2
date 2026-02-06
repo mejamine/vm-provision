@@ -46,7 +46,7 @@
     <!-- CD-ROM for Installation -->
     <disk type='file' device='cdrom'>
       <driver name='qemu' type='raw'/>
-      <source file='{{libvirt_pool_dir}}/{{ vm_name }}/seed.iso'/>
+      <source file='{{libvirt_pool_dir}}/seed.iso'/>
       <target dev='hdb' bus='ide'/>
       <readonly/>
     </disk>
