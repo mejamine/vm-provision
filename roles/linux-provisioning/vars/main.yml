@@ -3,7 +3,7 @@ vm_name: amine-ansible-vm02
 vm_memory: 2048
 vm_vcpus: 2
 vm_disk_size: 20G
-vm_os_variant: ubuntu22.04
+
 
 # Libvirt
 libvirt_pool: amin-pool
@@ -11,6 +11,6 @@ libvirt_pool_dir: /mnt/storage/amin
 libvirt_network: amin-net
 
 # Cloud image
-base_image_url: https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
-base_image_name: jammy-base.qcow2
+base_image_url: https://dl.rockylinux.org/pub/rocky/9/images/x86_64/Rocky-9-GenericCloud.latest.x86_64.qcow2
+base_image_name: rocky9-base.qcow2
 
