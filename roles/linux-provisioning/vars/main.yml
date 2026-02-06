@@ -23,3 +23,4 @@ vm_graphics_listen: "127.0.0.1"
 vm_cpu_mode: "host-model"
 vm_features: ["acpi", "apic"]
 vm_disk_format: "qcow2"
+vm_network_model: "virtio"
