@@ -3,15 +3,15 @@ hostname: "{{ vm_name }}.smartek.ae"
 #manage_etc_hosts: true
 
 users:
-  - name: 'ansible'
-
+  - default
+  - name: ansible
     sudo: ALL=(ALL) NOPASSWD:ALL
     groups: sudo
     shell: /bin/bash
 
 chpasswd:
   list: |
-   'ansible':'ansible'
+   ansible:ansible
   expire: False
 
 package_update: true
