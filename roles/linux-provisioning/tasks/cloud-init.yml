@@ -16,6 +16,13 @@
     dest: "/tmp/{{ vm_name }}/meta-data"
     mode: '0644'
 
+- name: Render network-config
+  ansible.builtin.template:
+    src: network-config.j2
+    dest: "/tmp/{{ vm_name }}/network-config"
+    mode: '0644'
+  become: true
+
 - name: Ensure genisoimage is installed
   ansible.builtin.package:
     name: genisoimage
@@ -28,5 +35,6 @@
     -joliet -rock
     /tmp/{{ vm_name }}/user-data
     /tmp/{{ vm_name }}/meta-data
+    /tmp/{{ vm_name }}/network-config
   args:
     creates: "{{libvirt_pool_dir}}/seed.iso"

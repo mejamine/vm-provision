@@ -24,3 +24,6 @@ vm_cpu_mode: "host-model"
 vm_features: ["acpi", "apic"]
 vm_disk_format: "qcow2"
 vm_network_model: "virtio"
+vm_nic: "eth0"
+vm_ip: 192.168.140.133
+vm_gateway: 192.168.140.1
