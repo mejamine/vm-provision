@@ -1,5 +1,15 @@
 - name: linux vm provisioning
   hosts: kvm01
   become: true
+
+  tasks: 
+
+    - name: Set internal paths
+      set_fact:
+        vm_image: "{{ libvirt_pool_dir }}/{{ vm_name }}.qcow2"
+        seed_iso: "{{ libvirt_pool_dir }}/{{ vm_name }}-seed.iso"
+
   roles:
-   - linux-provisioning
+   - disk creation
+   - cloud-init
+   - provisioning

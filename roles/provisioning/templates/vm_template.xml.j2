@@ -1,0 +1,96 @@
+<domain type='kvm'>
+  <name>{{ vm_name }}</name>
+  <memory unit='MiB'>{{ vm_memory }}</memory>
+  <currentMemory unit='MiB'>{{ vm_memory }}</currentMemory>
+  <vcpu placement='static'>{{ vm_vcpus }}</vcpu>
+
+  <os>
+    <type arch='{{ vm_arch }}' machine='{{ vm_machine }}'>hvm</type>
+    <boot dev='cdrom'/>
+    <boot dev='hd'/>
+    <bootmenu enable='yes'/>
+    {% if vm_os_variant %}
+    <type arch='{{ vm_arch }}' machine='{{ vm_machine }}'>hvm</type>
+    {% endif %}
+  </os>
+
+  <features>
+    {% for feature in vm_features %}
+    <{{ feature }}/>
+    {% endfor %}
+  </features>
+
+  <cpu mode='{{ vm_cpu_mode }}' check='none'/>
+
+  <clock offset='{{ vm_clock }}'>
+    <timer name='rtc' tickpolicy='catchup'/>
+    <timer name='pit' tickpolicy='delay'/>
+    <timer name='hpet' present='no'/>
+  </clock>
+
+  <pm>
+    <suspend-to-mem enabled='no'/>
+    <suspend-to-disk enabled='no'/>
+  </pm>
+
+  <devices>
+    <emulator>/usr/bin/qemu-system-{{ vm_arch }}</emulator>
+
+    <!-- System Disk -->
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='{{ vm_disk_format }}' cache='none' io='native'/>
+      <source file='{{ libvirt_pool_dir }}/{{ vm_name }}/{{ vm_name }}.qcow2'/>
+      <target dev='vda' bus='virtio'/>
+    </disk>
+
+    <!-- CD-ROM for Installation -->
+    <disk type='file' device='cdrom'>
+      <driver name='qemu' type='raw'/>
+      <source file='{{libvirt_pool_dir}}/seed.iso'/>
+      <target dev='hdb' bus='ide'/>
+      <readonly/>
+    </disk>
+
+    <!-- Network Interface -->
+    <interface type='network'>
+      <source network='{{ libvirt_network }}'/>
+      <model type='{{ vm_network_model }}'/>    
+    </interface>
+
+    <!-- Controllers -->
+    <controller type='usb' index='0' model='qemu-xhci' ports='15'/>
+    <controller type='sata' index='0'/>
+    <controller type='pci' index='0' model='pci-root'/>
+    <controller type='virtio-serial' index='0'/>
+
+    <!-- Input Devices -->
+    <input type='tablet' bus='usb'/>
+    <input type='mouse' bus='ps2'/>
+    <input type='keyboard' bus='ps2'/>
+
+    <!-- Graphics -->
+    <graphics type='{{ vm_graphics_type }}' autoport='yes' listen='{{ vm_graphics_listen }}'>
+      <listen type='address' address='{{ vm_graphics_listen }}'/>
+    </graphics>
+
+    <video>
+      <model type='qxl' ram='65536' vram='65536' vgamem='16384' heads='1' primary='yes'/>
+
+    </video>
+
+    <!-- Serial Console -->
+    <serial type='pty'>
+      <target type='isa-serial' port='0'>
+        <model name='isa-serial'/>
+      </target>
+    </serial>
+
+    <console type='pty'>
+      <target type='serial' port='0'/>
+    </console>
+
+    <rng model='virtio'>
+      <backend model='random'>/dev/urandom</backend>
+    </rng>
+  </devices>
+</domain>

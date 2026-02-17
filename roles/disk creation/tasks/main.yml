@@ -10,9 +10,4 @@
   import_tasks: image.yml
   when: not vm_exists
 
-- name: Prepare cloud-init
-  import_tasks: cloud-init.yml
-  when: not vm_exists
 
-- name: Define and start VM
-  import_tasks: vm.yml
